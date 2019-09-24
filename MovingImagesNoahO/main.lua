@@ -36,3 +36,31 @@
 
 	-- MoveShip will be called over and over again
 	Runtime:addEventListener("enterFrame", MoveShip)
+
+	--------------------------------------------------------------------------------------------------------------
+
+	scrollSpeed2 = 50
+	-- 2nd character image with width and height
+	local girl1 = display.newImageRect("Images/SpaceCute PNG/girl1.png", 200, 200)
+
+	--set the image to be transparent
+	girl1.alpha = 0
+
+	--set the initial x and y position of beetleship
+	girl1.x = display.contentHeight/2
+	girl1.y = 0
+
+	--Function: MoveShip
+	--Input:this function sccepts an event listener
+	--
+	--Output: none
+	--Description: this function adds the scroll speed to the x-value of the ship
+	local function MoveGirl(event)
+		-- add the scroll speed to the y-value of the ship
+		girl1.y = girl1.y + scrollSpeed2
+		--change the transparency of the ship every time it moves so that it fades out
+		girl1.alpha = girl1.alpha + 0.1
+	end
+
+	-- MoveShip will be called over and over again
+	Runtime:addEventListener("enterFrame", MoveGirl)
