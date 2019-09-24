@@ -22,7 +22,7 @@ textObject = display.newText ("Hello Galaxy!", display.contentWidth/2, display.c
 textObject:setTextColor(204/255, 153/255, 255/255)
 
 --displays signature and creates variable
-local textobjectsignature = display.newText ("By: Noah", 500, 550, "Comic sans ms", 50)
+local textobjectsignature = display.newText ("By: Noah", 500, 550, nil, 50)
 
 --change text color
 textobjectsignature:setTextColor(0/255, 0/255, 255/255)
