@@ -7,20 +7,20 @@
 	display.setStatusBar(display.HiddenStatusBar)
 
 	--global variables
-	scrollSpeed = 3
+	scrollSpeed = 5
 
 	--background image with width and height
-	local backgroundImage = display.newImageRect("Images/background.png", 2048, 1536)
+	local backgroundImage = display.newImageRect("Images/SpaceCute PNG/blueSky.png", 2048, 1536)
 
 	--character image with width and height
-	local beetleship = display.newImageRect("Images/SpaceCute PNG/beetleship.png", 200, 200)
+	local plane1 = display.newImageRect("Images/SpaceCute PNG/jetFighter.png", 800, 800)
 
 	--set the image to be transparent
-	beetleship.alpha = 0
+	plane1.alpha = 0
 
 	--set the initial x and y position of beetleship
-	beetleship.x = 0
-	beetleship.y = display.contentHeight/3
+	plane1.x = 0
+	plane1.y = display.contentHeight/3
 
 	--Function: MoveShip
 	--Input:this function sccepts an event listener
@@ -29,38 +29,69 @@
 	--Description: this function adds the scroll speed to the x-value of the ship
 	local function MoveShip(event)
 		-- add the scroll speed to the x-value of the ship
-		beetleship.x = beetleship.x + scrollSpeed
+		plane1.x = plane1.x + scrollSpeed
 		--change the transparency of the ship every time it moves so that it fades out
-		beetleship.alpha = beetleship.alpha + 0.01
+		plane1.alpha = plane1.alpha + 0.01
 	end
 
 	-- MoveShip will be called over and over again
 	Runtime:addEventListener("enterFrame", MoveShip)
 
+	local function SizePlane1(event)
+		-- add the scroll speed to the y-value of the ship
+		plane1.xScale = plane1.xScale-0.002
+		plane1.yScale = plane1.yScale-0.002
+		
+	end
+
+	-- MoveShip will be called over and over again
+	Runtime:addEventListener("enterFrame", SizePlane1)
+
 	--------------------------------------------------------------------------------------------------------------
 
-	scrollSpeed2 = 50
+	scrollSpeed2 = 8
+
 	-- 2nd character image with width and height
-	local girl1 = display.newImageRect("Images/SpaceCute PNG/girl1.png", 200, 200)
+	local plane2 = display.newImageRect("Images/SpaceCute PNG/jetFighter2.png", 200, 200)
 
 	--set the image to be transparent
-	girl1.alpha = 0
+	plane2.alpha = 0
 
 	--set the initial x and y position of beetleship
-	girl1.x = display.contentHeight/2
-	girl1.y = 0
+	plane2.x = math.random(display.contentWidth/2,800)
+	plane2.y = 0
 
 	--Function: MoveShip
 	--Input:this function sccepts an event listener
 	--
 	--Output: none
 	--Description: this function adds the scroll speed to the x-value of the ship
-	local function MoveGirl(event)
+	local function MovePlane(event)
 		-- add the scroll speed to the y-value of the ship
-		girl1.y = girl1.y + scrollSpeed2
+		plane2.y = plane2.y + scrollSpeed2
 		--change the transparency of the ship every time it moves so that it fades out
-		girl1.alpha = girl1.alpha + 0.1
+		plane2.alpha = plane2.alpha + 0.01
 	end
 
 	-- MoveShip will be called over and over again
-	Runtime:addEventListener("enterFrame", MoveGirl)
+	Runtime:addEventListener("enterFrame", MovePlane)
+
+	local function SizePlane(event)
+		-- add the scroll speed to the y-value of the ship
+		plane2.xScale = plane2.xScale+0.02
+		plane2.yScale = plane2.yScale+0.02
+		
+	end
+
+	-- MoveShip will be called over and over again
+	Runtime:addEventListener("enterFrame", SizePlane)
+
+	local function RotatePlane(event)
+		-- add the scroll speed to the y-value of the ship
+		plane2.rotation = plane2.rotate("Images/SpaceCute PNG/jetFighter2.png" 0.1)
+		
+	end
+
+	-- MoveShip will be called over and over again
+	Runtime:addEventListener("enterFrame", RotatePlane)
+	
