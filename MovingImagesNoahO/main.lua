@@ -87,8 +87,8 @@
 	Runtime:addEventListener("enterFrame", SizePlane)
 
 	local function RotatePlane(event)
-		-- add the scroll speed to the y-value of the ship
-		plane2.rotation = plane2.rotate("Images/SpaceCute PNG/jetFighter2.png" 0.1)
+		
+		plane2:rotate (3)
 		
 	end
 
