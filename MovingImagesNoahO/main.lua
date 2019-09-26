@@ -13,7 +13,7 @@
 	local backgroundImage = display.newImageRect("Images/SpaceCute PNG/blueSky.png", 2048, 1536)
 
 	--character image with width and height
-	local plane1 = display.newImageRect("Images/SpaceCute PNG/jetFighter.png", 800, 800)
+	local plane1 = display.newImageRect("Images/SpaceCute PNG/jetFighter.png", 500, 400)
 
 	--set the image to be transparent
 	plane1.alpha = 0
