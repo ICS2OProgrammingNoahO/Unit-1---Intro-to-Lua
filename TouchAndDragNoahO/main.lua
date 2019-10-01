@@ -52,3 +52,29 @@ end
 
 -- add the respective listeners
 submarine:addEventListener("touch", SubmarineListener)
+
+--function: SubmarineListener
+
+--Input: touch listener
+--Output: none
+--Description: when shark is touched, move it
+local function SharkListener(touch)
+
+	if (touch.phase == "began") then
+		if (alreadyTouchedSubmarine == false) then
+			alreadyTouchedShark = true
+		end
+	end
+
+	if ( (touch.phase == "moved") and (alreadyTouchedShark == true) ) then
+		shark.x = touch.x
+		shark.y = touch.y
+	end
+	if (touch.phase == "ended") then
+		alreadyTouchedShark = false
+		alreadyTouchedSubmarine = false
+	end
+end
+
+-- add the respective listeners
+shark:addEventListener("touch", SharkListener)
