@@ -28,4 +28,45 @@ textObject.y = display.contentHeight/3
 textObject:setTextColor (1, 1, 0)
 textObject.isVisible = false
 
---Function
+--Function: BlueButtonListener
+--Input: touch Listener
+--Output: none
+--Description: when blue button is clicked, it will make the text appear with the red button, and make the blue button disappear
+local function BlueButtonListener(touch)
+	if (touch.phase == "began") then
+		blueButton.isVisible = false
+		redButton.isVisible = true
+		textObject.isVisible = true
+	end
+
+	if(touch.phase == "ended") then
+		blueButton.isVisible = true
+		redButton.isVisible = false
+		textObject.isVisible = false
+	end
+end
+
+--listeners
+blueButton:addEventListener("touch", BlueButtonListener)
+
+--Function: RedButtonListener
+--Input: touch Listener
+--Output: none
+--Description: when Red button is clicked, it will make the text disappear with the blue button, and make the red button disappear
+local function RedButtonListener(touch)
+	if (touch.phase == "began") then
+		redButton.isVisible = false
+		blueButton.isVisible = true
+		textObject.isVisible = false
+	end
+
+	if(touch.phase == "ended") then
+		redButton.isVisible = true
+		blueButton.isVisible = false
+		textObject.isVisible = true
+	end
+end
+
+--listeners
+redButton:addEventListener("touch", RedButtonListener)
+
