@@ -23,10 +23,16 @@ local randomNumber2
 local userAnswer
 local correctAnswer
 local incorrectObject
+local points = 0
+local points_ = 0
+local youLose
+local youWin
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 local function AskQuestion()
 	--generate 2 random numbers between a max. a min. number
@@ -63,16 +69,39 @@ local function NumericFeildListener( event )
 		--if the users answer and the correct answer are the same:
 		if (userAnswer == correctAnswer) then
 			correctObject.isVisible = true
-			timer.performWithDelay(2000, HideCorrect)
+			timer.performWithDelay(500, HideCorrect)
 		--if the users answer and the correct answer are different:
+		--give points
+		points = points +1
+		-- update it in display object
+		pointsText.text = "Points = " .. points
+		if (points == 5) then
+				youWin.isVisible = true
+				correctObject.isVisible = false
+				questionObject.isVisible = false
+				numericfield.isVisible = false
+				pointsText.isVisible = false
+			end
+		
+
 		else incorrectObject.isVisible = true
-			timer.performWithDelay(2000, HideCorrect)
+			timer.performWithDelay(500, HideCorrect)
+			points_ = points_ + 1
+			if (points_ == 3) then
+				youLose.isVisible = true
+				incorrectObject.isVisible = false
+				questionObject.isVisible = false
+				numericfield.isVisible = false
+				pointsText.isVisible = false
+			end
+
 
 		end
 		--clear text numericField
 		event.target.text = ""
 	end
 end
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- OBJECT CREATION
@@ -82,6 +111,7 @@ end
 --questionObject = display.newText( "", display.contentWidth/2, display.contentHeight/2, nil, 50 )
 questionObject = display.newText( "", display.contentWidth*1/3, display.contentHeight/2, nil, 50)
 questionObject:setTextColor(177/255, 20/255, 255/255)
+
 
 --create the correct text object and make it invisable
 correctObject = display.newText( "Correct!", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
@@ -97,13 +127,26 @@ incorrectObject.isVisible = false
 --create numeric field
 numericfield = native.newTextField(display.contentWidth/2, display.contentHeight/2, 150, 80)
 numericfield.inputType = "number"
+numericfield.isVisible = true
 
+--create lose text
+youLose = display.newText( "You Lose!", display.contentWidth/2, display.contentHeight*2/3, nil, 70)
+youLose.isVisible = false
+
+--create win text
+youWin = display.newText( "You Win!", display.contentWidth/2, display.contentHeight*2/3, nil, 70)
+youWin.isVisible = false
+
+--create points text
+pointsText = display.newText("Points =" .. points, display.contentWidth/2, display.contentHeight/3, nil, 50)
 -- add the event listener for the numeric feild
 numericfield:addEventListener( "userInput", NumericFeildListener)
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- FUNCTION CALLS
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
---call the function to ask the question
+--call the functions
 AskQuestion()
+
