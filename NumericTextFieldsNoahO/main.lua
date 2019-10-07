@@ -27,25 +27,55 @@ local points = 0
 local points_ = 0
 local youLose
 local youWin
+local correctAnswer1
+local lives = 3
+local livesText
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
 local function AskQuestion()
+	--generate a random number between 1 and 4 and declare it's variable
+	randomOperator = math.random(1, 4)
+
 	--generate 2 random numbers between a max. a min. number
 	randomNumber1 = math.random(0, 10)
 	randomNumber2 = math.random(0, 10)
+	randomNumber3 = math.random(2, 12)
+	randomNumber4 = math.random(2, 12)
+
+	if (randomOperator == 1) then
 
 	correctAnswer = randomNumber1 + randomNumber2
 
 	--create question in text object
 	questionObject.text = randomNumber1 .. "+" .. randomNumber2 .. "="
+	elseif (randomOperator == 2) then
+		
+	correctAnswer = randomNumber1 - randomNumber2
+		if (correctAnswer < 0) then
 
+		else 
+			questionObject.text = randomNumber1 .. "-" .. randomNumber2 .. "="
+		end
+	--create question in text object
+	elseif (randomOperator == 3) then
+		
+	correctAnswer = randomNumber1 * randomNumber2
+
+	--create question in text object
+	questionObject.text = randomNumber1 .. "*" .. randomNumber2 .. "="
+
+	elseif (randomOperator == 4) then
+	
+	correctAnswer1 = randomNumber4 * randomNumber3
+	correctAnswer = correctAnswer1 / randomNumber3
+
+	--create question in text object
+	questionObject.text = correctAnswer1 .. "/" .. randomNumber3 .. "="
+	end
 end
-
 local function HideCorrect()
 
 	correctObject.isVisible = false
@@ -93,6 +123,7 @@ local function NumericFeildListener( event )
 				questionObject.isVisible = false
 				numericfield.isVisible = false
 				pointsText.isVisible = false
+				lives = lives - 1
 			end
 
 
@@ -137,8 +168,11 @@ youLose.isVisible = false
 youWin = display.newText( "You Win!", display.contentWidth/2, display.contentHeight*2/3, nil, 70)
 youWin.isVisible = false
 
+--create lives text
+livesText = display.newText("Lives =" .. lives, display.contentWidth/2, display.contentHeight/3, nil, 50)
+
 --create points text
-pointsText = display.newText("Points =" .. points, display.contentWidth/2, display.contentHeight/3, nil, 50)
+pointsText = display.newText("Points =" .. points, display.contentWidth/2, display.contentHeight/4, nil, 50)
 -- add the event listener for the numeric feild
 numericfield:addEventListener( "userInput", NumericFeildListener)
 
@@ -149,4 +183,5 @@ numericfield:addEventListener( "userInput", NumericFeildListener)
 
 --call the functions
 AskQuestion()
+
 
