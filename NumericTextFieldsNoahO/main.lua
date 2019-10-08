@@ -30,6 +30,7 @@ local youWin
 local correctAnswer1
 local lives = 3
 local livesText
+local realAnswer
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -55,6 +56,7 @@ local function AskQuestion()
 		
 	correctAnswer = randomNumber1 - randomNumber2
 		if (correctAnswer < 0) then
+			correctAnswer = randomNumber2 - randomNumber1
 
 		else 
 			questionObject.text = randomNumber1 .. "-" .. randomNumber2 .. "="
@@ -82,6 +84,11 @@ local function HideCorrect()
 	incorrectObject.isVisible = false
 	AskQuestion()
 
+end 
+local function HideRealAnswer()
+
+	realAnswer.isVisible = false
+	AskQuestion()
 end
 
 local function NumericFeildListener( event )
@@ -103,27 +110,39 @@ local function NumericFeildListener( event )
 		--if the users answer and the correct answer are different:
 		--give points
 		points = points +1
+		
 		-- update it in display object
 		pointsText.text = "Points = " .. points
+		
 		if (points == 5) then
 				youWin.isVisible = true
 				correctObject.isVisible = false
 				questionObject.isVisible = false
 				numericfield.isVisible = false
 				pointsText.isVisible = false
+				livesText.isVisible = false
+				
 			end
 		
 
 		else incorrectObject.isVisible = true
-			timer.performWithDelay(500, HideCorrect)
+			realAnswer = display.newText("The real answer is " .. correctAnswer, display.contentWidth/2, display.contentHeight/9, nil, 50)
+			realAnswer.isVisible = true
+			timer.performWithDelay(1000, HideRealAnswer)
+
 			points_ = points_ + 1
+			 lives = lives - 1
+			-- update it in display object
+				livesText.text = "Lives = " .. lives
+				
 			if (points_ == 3) then
 				youLose.isVisible = true
 				incorrectObject.isVisible = false
 				questionObject.isVisible = false
 				numericfield.isVisible = false
 				pointsText.isVisible = false
-				lives = lives - 1
+				livesText.isVisible = false
+				
 			end
 
 
@@ -175,7 +194,6 @@ livesText = display.newText("Lives =" .. lives, display.contentWidth/2, display.
 pointsText = display.newText("Points =" .. points, display.contentWidth/2, display.contentHeight/4, nil, 50)
 -- add the event listener for the numeric feild
 numericfield:addEventListener( "userInput", NumericFeildListener)
-
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- FUNCTION CALLS
