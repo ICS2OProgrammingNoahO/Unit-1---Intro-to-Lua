@@ -7,7 +7,7 @@
 	display.setStatusBar(display.HiddenStatusBar)
 
 	--global variables
-	scrollSpeed = 5
+	scrollSpeed = 3
 
 	--background image with width and height
 	local backgroundImage = display.newImageRect("Images/SpaceCute PNG/blueSky.png", 2048, 1536)
@@ -15,13 +15,21 @@
 	--character image with width and height
 	local plane1 = display.newImageRect("Images/SpaceCute PNG/jetFighter.png", 500, 400)
 
+	--------------------------------------------------------------------------------------------------------------
+-- 
+	--------------------------------------------------------------------------------------------------------------
+		--Sounds
+	--------------------------------------------------------------------------------------------------------------
+local soundtrack = audio.loadStream("Sounds/bkgMusic.mp3")
+local soundtrackChannel
+
 	--set the image to be transparent
 	plane1.alpha = 0
 
 	--set the initial x and y position of beetleship
 	plane1.x = 0
 	plane1.y = display.contentHeight/3
-
+ 		
 	--Function: MoveShip
 	--Input:this function sccepts an event listener
 	--
@@ -30,6 +38,7 @@
 	local function MoveShip(event)
 		-- add the scroll speed to the x-value of the ship
 		plane1.x = plane1.x + scrollSpeed
+		soundtrackChannel = audio.play(soundtrack, {loop = 1})
 		--change the transparency of the ship every time it moves so that it fades out
 		plane1.alpha = plane1.alpha + 0.01
 	end
@@ -49,7 +58,7 @@
 
 	--------------------------------------------------------------------------------------------------------------
 
-	scrollSpeed2 = 8
+	scrollSpeed2 = 4
 
 	-- 2nd character image with width and height
 	local plane2 = display.newImageRect("Images/SpaceCute PNG/jetFighter2.png", 200, 200)

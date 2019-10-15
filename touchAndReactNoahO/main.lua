@@ -9,6 +9,16 @@ display.setDefault ("background", 153/255, 204/255, 255/255)
 --hide the status bar
 display.setStatusBar(display.HiddenStatusBar)
 
+
+
+-----------------------------------------------------------------------------
+--Sounds
+-----------------------------------------------------------------------------
+local music = audio.loadStream("Sounds/soundtrack.mp3")
+local musicChannel
+
+
+musicChannel = audio.play(music, {load = -1})
 --create blue button, set it's position and make it visible
 local blueButton = display.newImageRect("Images/Fast Button Inactive@2x.png",198, 96)
 blueButton.x = display.contentWidth/2

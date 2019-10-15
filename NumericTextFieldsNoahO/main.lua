@@ -31,6 +31,10 @@ local correctAnswer1
 local lives = 3
 local livesText
 local realAnswer
+local rightSound = audio.loadSound( "beep.mp3")
+local WrongSound = audio.loadSound( "wrong.mp3")
+local channel1
+local channel2
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -107,6 +111,7 @@ local function NumericFeildListener( event )
 		if (userAnswer == correctAnswer) then
 			correctObject.isVisible = true
 			timer.performWithDelay(500, HideCorrect)
+			channel1 = audio.play(rightSound)
 		--if the users answer and the correct answer are different:
 		--give points
 		points = points +1
@@ -128,7 +133,9 @@ local function NumericFeildListener( event )
 		else incorrectObject.isVisible = true
 			realAnswer = display.newText("The real answer is " .. correctAnswer, display.contentWidth/2, display.contentHeight/9, nil, 50)
 			realAnswer.isVisible = true
+			channel2 = audio.play(wrongSound)
 			timer.performWithDelay(1000, HideRealAnswer)
+
 
 			points_ = points_ + 1
 			 lives = lives - 1
