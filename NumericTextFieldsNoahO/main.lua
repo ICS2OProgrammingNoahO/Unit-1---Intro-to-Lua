@@ -44,43 +44,19 @@ local heart3
 local heart4
 local clockText
 local clockObject
+local channel3
+local endSound = audio.loadsound( "")
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-local function 	UpdateTime()
-	-- decrement the number of secondsLeft
-	secondsLeft = secondsLeft - 1
-
-	-- display the number of seconds left in the clock object
-	clockText.text = secondsLeft .. ""
-
-	if (secondsLeft == 0) then
-		--reset the number of seconds left
-		secondsLeft = totalSeconds
-		lives = lives - 1
-
-		--*** IF THERE ARE NO LIVES LEFT, PLAY A LOSE SOUND, SHOW A YOU LOSE IMAGE
-		-- AND CANCEL THE TIMER REMOVE THE THIRD HEART BY MAKING IT INVISIBLE\
-				if (lives == 2) then
-					heart2.isVisible = false
-				elseif (lives == 1) then
-					heart1.isVisible = false
-				end
-	end
-end
-
--- function that calls the timer
-local function StartTimer()
-	--create a countDown timer that loops infinitly
-	countDownTimer = timer.performWithDelay( 1000, UpdateTime, 0)
-end
 
 local function AskQuestion()
+	  
+	 
 	
-	StartTimer()
 	--generate a random number between 1 and 4 and declare it's variable
 	randomOperator = math.random(1, 4)
 
@@ -122,6 +98,64 @@ local function AskQuestion()
 	questionObject.text = correctAnswer1 .. "/" .. randomNumber3 .. "="
 	end
 end
+
+
+
+local function 	UpdateTime()
+	-- decrement the number of secondsLeft
+	secondsLeft = secondsLeft - 1
+
+	-- display the number of seconds left in the clock object
+	clockText.text = secondsLeft .. ""
+
+	if (secondsLeft == 0) then
+		--reset the number of seconds left
+		secondsLeft = totalSeconds
+		lives = lives - 1
+		livesText.text = "Lives = " .. lives
+		AskQuestion()
+		
+				
+
+		--*** IF THERE ARE NO LIVES LEFT, PLAY A LOSE SOUND, SHOW A YOU LOSE IMAGE
+		-- AND CANCEL THE TIMER REMOVE THE THIRD HEART BY MAKING IT INVISIBLE\
+		if (lives == 3) then
+					
+			heart1.isVisible = false
+		elseif (lives == 2) then
+			heart2.isVisible = false
+		elseif (lives == 1) then
+			heart3.isVisible = false
+		elseif (lives == 0) then
+			heart4.isVisible = false
+			youLose.isVisible = true
+			incorrectObject.isVisible = false
+			questionObject.isVisible = false
+			numericfield.isVisible = false
+			pointsText.isVisible = false
+			livesText.isVisible = false
+			timer.cancel(countDownTimer)
+			clockText.isVisible = false
+			channel3 = audio.play(endSound)
+			
+		end
+
+	end
+
+end
+
+-- function that calls the timer
+local function StartTimer()
+	--create a countDown timer that loops infinitly
+	countDownTimer = timer.performWithDelay( 1000, UpdateTime, 0)
+end
+
+
+
+
+
+
+
 local function HideCorrect()
 
 	correctObject.isVisible = false
@@ -130,7 +164,6 @@ local function HideCorrect()
 	AskQuestion()
 
 end 
-
 
 local function NumericFeildListener( event )
 	-- User begins editing "numericfield"
@@ -150,6 +183,9 @@ local function NumericFeildListener( event )
 			incorrectObject.isVisible = false
 			timer.performWithDelay(700, HideCorrect)
 			channel1 = audio.play(rightSound)
+			secondsLeft = 10
+			
+			
 
 		--if the users answer and the correct answer are different:
 		--give points
@@ -170,23 +206,36 @@ local function NumericFeildListener( event )
 		
 
 		else incorrectObject.isVisible = true
-			realAnswer = display.newText("The real answer is " .. correctAnswer, display.contentWidth/2, display.contentHeight/9, nil, 50)
+			realAnswer.text = "The real answer is " .. correctAnswer
 			realAnswer.isVisible = true
 			timer.performWithDelay(700, HideCorrect)
 			channel2 = audio.play(wrongSound)
 			points_ = points_ + 1
 			 lives = lives - 1
+			 secondsLeft = 10
 
 			-- update it in display object
 				livesText.text = "Lives = " .. lives
+
+			if (lives == 3) then
+					
+			heart1.isVisible = false
+		elseif (lives == 2) then
+			heart2.isVisible = false
+		elseif (lives == 1) then
+			heart3.isVisible = false
+		elseif (lives == 0) then
+			heart4.isVisible = false
+			youLose.isVisible = true
+			incorrectObject.isVisible = false
+			questionObject.isVisible = false
+			numericfield.isVisible = false
+			pointsText.isVisible = false
+			livesText.isVisible = false
+			timer.cancel(countDownTimer)
+			clockText.isVisible = false
+			channel3 = audio.play(endSound)
 				
-			if (points_ == 3) then
-				youLose.isVisible = true
-				incorrectObject.isVisible = false
-				questionObject.isVisible = false
-				numericfield.isVisible = false
-				pointsText.isVisible = false
-				livesText.isVisible = false
 				
 			end
 
@@ -204,22 +253,23 @@ end
 
 --create the hearts
 heart1 = display.newImageRect("heart.png", 50, 50)
-heart1.x = display.contentWidth * 7 / 8
-heart1.y = display.contentHeight - 200
+heart1.x = display.contentWidth * 6 / 8
+heart1.y = display.contentHeight - 700
 
 heart2 = display.newImageRect("heart.png", 50, 50)
-heart2.x = display.contentWidth * 6 / 8
-heart2.y = display.contentHeight - 200
+heart2.x = display.contentWidth * 5 / 8
+heart2.y = display.contentHeight - 700
 
 heart3 = display.newImageRect("heart.png", 50, 50)
-heart3.x = display.contentWidth * 5 / 8
-heart3.y = display.contentHeight - 200
+heart3.x = display.contentWidth * 4 / 8
+heart3.y = display.contentHeight - 700
 
 heart4 = display.newImageRect("heart.png", 50, 50)
-heart4.x = display.contentWidth * 4 / 8
-heart4.y = display.contentHeight - 200
+heart4.x = display.contentWidth * 3 / 8
+heart4.y = display.contentHeight - 700
 
 
+realAnswer = display.newText("", display.contentWidth/2, display.contentHeight/9, nil, 50)
 
 --displays a question and sets the color
 --questionObject = display.newText( "", display.contentWidth/2, display.contentHeight/2, nil, 50 )
@@ -244,7 +294,9 @@ numericfield.inputType = "number"
 numericfield.isVisible = true
 
 --create lose text
-youLose = display.newText( "You Lose!", display.contentWidth/2, display.contentHeight*2/3, nil, 70)
+youLose = display.newImageRect( "gameOver.png", 500, 500)
+youLose.x = display.contentWidth/2
+youLose.y = display.contentHeight/2
 youLose.isVisible = false
 
 --create win text
@@ -253,19 +305,23 @@ youWin.isVisible = false
 
 --create lives text
 livesText = display.newText("Lives =" .. lives, display.contentWidth/2, display.contentHeight/3, nil, 50)
-
+livesText:setFillColor(255/255, 255/255, 0/255)
 --create points text
 pointsText = display.newText("Points =" .. points, display.contentWidth/2, display.contentHeight/4, nil, 50)
+pointsText:setFillColor(255/255, 255/255, 0/255)
 -- add the event listener for the numeric feild
 numericfield:addEventListener( "userInput", NumericFeildListener)
 
 clockText = display.newText( secondsLeft, 100, 100, nil, 50)
+clockText:setFillColor(255/255, 0/255, 0/255)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- FUNCTION CALLS
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --call the functions
+
 AskQuestion()
+ StartTimer()
 
 
