@@ -44,8 +44,8 @@ local heart3
 local heart4
 local clockText
 local clockObject
-local channel3
-local endSound = audio.loadsound( "")
+
+
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -136,7 +136,7 @@ local function 	UpdateTime()
 			livesText.isVisible = false
 			timer.cancel(countDownTimer)
 			clockText.isVisible = false
-			channel3 = audio.play(endSound)
+			channel2 = audio.play(wrongSound)
 			
 		end
 
@@ -234,7 +234,7 @@ local function NumericFeildListener( event )
 			livesText.isVisible = false
 			timer.cancel(countDownTimer)
 			clockText.isVisible = false
-			channel3 = audio.play(endSound)
+			channel2 = audio.play(wrongSound)
 				
 				
 			end
