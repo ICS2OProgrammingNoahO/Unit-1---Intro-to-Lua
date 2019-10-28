@@ -72,7 +72,7 @@ local function AskQuestion()
 
 	--create question in text object
 	questionObject.text = randomNumber1 .. "+" .. randomNumber2 .. "="
-	elseif (randomOperator == 2) then
+		elseif (randomOperator == 2) then
 		
 	correctAnswer = randomNumber1 - randomNumber2
 		if (correctAnswer < 0) then
